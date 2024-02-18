@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honeycomb Transition for Images</title>
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="hexagon honeycomb">
+            <img src="{% static 'numbers.jpg' %}" alt="Image 1">
+        </div>
+        <div class="hexagon honeycomb">
+            <img src="{% static 'set.jpg' %}" alt="Image 2">
+        </div>
+        <div class="hexagon honeycomb">
+            <img src="{% static 'images.jpeg' %}" alt="Image 3">
+        </div>
+
+        <div class="hexagon honeycomb">
+            <img src="{% static 'Numbers-Detox-Illustration.jpg' %}" alt="Image 4">
+        </div>
+	
+        
+    </div>
+
+
+<div class="login-box">
+  <h2>Fibonacci Generator</h2>
+  <form id ="Fibonacci-form">
+    {% csrf_token %}
+    <div class="user-box">
+      <input type="number" name="number_of_terms" required="">
+      <label>Enter the Number of Terms</label>
+    </div>
+    
+    <button type="submit" >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      GENERATE
+    </button>
+  </form>
+  <div id="fibonacci-result"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#Fibonacci-form').submit(function(event){
+            event.preventDefault();
+            var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "generatefibonnacci" %}',
+                    data: formData,
+                    success: function(response){
+                        $('#fibonacci-result').text('Fibonacci sequence: ' + response.fibonnacci_sequence.join(', '));
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>
